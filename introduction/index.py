@@ -9,7 +9,8 @@ class Intro(Scene):
 
         intro_text = TextMobject("An odd sum.")
 
-        self.add(pragmathic)
+        self.play(Write(pragmathic))
+        self.wait()
         self.play(pragmathic.set_color_by_gradient, (RED, BLUE))
         self.wait(1)
         self.play(Transform(pragmathic, intro_text))
@@ -68,7 +69,7 @@ class SumIntro(Scene):
         self.wait(2)
         self.play(FadeOut(text_sum_natural_numbers))
         self.play(Transform(r_sum_expr, text_sum_inquiry))
-        self.wait(8)
+        self.wait(10)
 
         self.wait(3)
         self.play(Transform(r_sum_expr, r_sum_expr1))
@@ -80,11 +81,15 @@ class SumIntro(Scene):
 
         self.play(FadeOut(number_line), FadeOut(sum_goes_this_way), FadeOut(right_arrow))
         self.play(Write(r_sum_expr))
+        self.wait(10)
+
         self.play(Write(analytic_continuation))
+        self.wait(15)
         self.play(r_sum_expr.set_color, RED)
-        self.wait()
+        self.wait(12)
         self.play(Transform(r_sum_expr, r_sum_eq))
         self.wait(3)
+        self.play(FadeOut(r_sum_expr), FadeOut(analytic_continuation))
 
 
 class HowTrue(Scene):
@@ -119,14 +124,24 @@ class HowTrue(Scene):
 class HowWillProve(Scene):
     def construct(self):
         # How does it work?
-        introduction = TextMobject("How", "\\textit{does}", "it work?")
+        introduction = TextMobject("Section 1.1: Mathematical thinking")
         self.play(Write(introduction))
         self.play(FadeOut(introduction))
 
-        # There are two other sums.
+        # You're a mathematician, so we'll use your powers of deduction to figure this one out.
+        self.wait()
+
+        # First off, we need to figure out what we're actually doing, so we'll lay out a proposition, which is exactly what you think: a proposition of a fact, that is either true or false
+        self.wait()
+        proposition = TexMobject(r"\textit{Proposition 1: }", r"\displaystyle\sum_{n=0}^{\infty}n = -\frac{1}{12}")
+        self.play(Write(proposition))
+        # In this case, our proposition is that the sum of all natural numbers is equal, or converges to, negative 1/12th.
+        self.wait()
+        self.play(FadeOut(proposition))
+        # Let's go about thinking about this. What if there was a way to think differently about this, not as a sum in itself, but as a proportion of two other sums?
         r_sum_expr = "$\\displaystyle\\sum_{n=0}^{\\infty}n$"
         sum_composition = TextMobject(
-            r_sum_expr + "   is proportional to two \\textit{other} sums!")
+            r_sum_expr + "   is a combination of other sums!")
         self.play(Write(sum_composition))
         self.wait()
         self.play(FadeOut(sum_composition))
@@ -152,11 +167,12 @@ class HowWillProve(Scene):
                 run_time=1
             )
             self.wait()
+        self.play(FadeOut(sum_one_textObject), FadeOut(sum_two_textObject))
 
 
-class GrandiSeries(Scene):
+class Sum1(Scene):
     def construct(self):
-        introduction = TextMobject("The first sum")
+        introduction = TextMobject("Section 1.2: The first sum")
         self.play(Write(introduction))
         self.wait()
         self.play(FadeOutAndShiftDown(introduction))
@@ -164,7 +180,7 @@ class GrandiSeries(Scene):
         # Introduction of Equation
         eq_sigma = TexMobject(r"\displaystyle\sum^{\infty}_{n=0} (-1)^n")
         eq_verbose = TexMobject(r"= 1-1+1-1+1 + \dots").shift(DOWN)
-        eq_name = TexMobject(r"S_n").shift(UP*1.5)
+        eq_name = TexMobject(r"S_1").shift(UP*1.5)
         eq_name_equals = TexMobject(r"S_1 = ").shift(UP*1.5)
         grandi_series_text = TextMobject("Grandi", " Series").shift(
             UP*1.5).set_color_by_tex_to_color_map({"Grandi": BLUE})
@@ -175,16 +191,16 @@ class GrandiSeries(Scene):
             eq_sigma.copy(), eq_verbose), run_time=1)
         self.wait(2)
 
-        # This is the sigma notation for it.
-        self.play(eq_sigma.set_color, BLUE, run_time=0.25)
-        self.wait(1)
-        self.play(eq_sigma.set_color, WHITE)
-        self.wait(2)
-        # This is the verbose notation for it.
-        self.play(eq_verbose.set_color, BLUE, run_time=0.25)
-        self.wait(1)
-        self.play(eq_verbose.set_color, WHITE)
-        self.wait(4)
+        # # This is the sigma notation for it.
+        # self.play(eq_sigma.set_color, BLUE, run_time=0.25)
+        # self.wait(1)
+        # self.play(eq_sigma.set_color, BLACK)
+        # self.wait(2)
+        # # This is the verbose notation for it.
+        # self.play(eq_verbose.set_color, BLUE, run_time=0.25)
+        # self.wait(1)
+        # self.play(eq_verbose.set_color, BLACK)
+        # self.wait(4)
         # We're going to be modifying this, so we'll name it S_1.
         self.play(eq_verbose.shift, DOWN)
         self.play(eq_sigma.shift, DOWN)
@@ -230,7 +246,17 @@ class GrandiSeries(Scene):
         self.play(Transform(eq_name, TexMobject(r"S_1 = \frac{1}{2}")))
         self.wait()
         # Expanding the left side, it's easy to see: 1+1-1+1 and so on all equal 1/2!
-        self.play(Transform(eq_name, TexMobject(r"1+1-1+1 + \dots = \frac{1}{2}")))
+        self.play(Transform(eq_name, TexMobject(r"1-1+1-1 + \dots = \frac{1}{2}")))
+        self.play(FadeOut(eq_name))
+
+class Sum2(Scene):
+    def construct(self):
+        section = TextMobject("Section 1.3: The Second Sum")
+        self.play(Write(section))
+        self.wait(2)
+        self.play(FadeOut(section))
+
+        # Math is all about unknowns. Right now, we have no clue 
 
 class IntroBanner(Scene):
     def construct(self):
@@ -242,6 +268,27 @@ class IntroBanner(Scene):
 
         self.add(pragmathic)
         self.add(text)
+
+class Part1(Scene):
+    def construct(self):
+        part = TextMobject("Part $1$: Value")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class Part2(Scene):
+    def construct(self):
+        part = TextMobject("Part $2$: Implications")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class Part3(Scene):
+    def construct(self):
+        part = TextMobject("Part $3$: Outro")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
 
 class Logo(Scene):
     def construct(self):
