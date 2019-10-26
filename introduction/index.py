@@ -10,8 +10,6 @@ class Intro(Scene):
         intro_text = TextMobject("An odd sum.")
 
         self.play(Write(pragmathic))
-        self.wait()
-        self.play(pragmathic.set_color_by_gradient, (RED, BLUE))
         self.wait(1)
         self.play(Transform(pragmathic, intro_text))
         self.wait(1.75)

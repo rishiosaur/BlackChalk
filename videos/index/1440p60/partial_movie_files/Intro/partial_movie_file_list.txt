@@ -3,5 +3,3 @@ file '/Users/rishikothari/Documents/BlackChalk/videos/index/1440p60/partial_movi
 file '/Users/rishikothari/Documents/BlackChalk/videos/index/1440p60/partial_movie_files/Intro/00002.mp4'
 file '/Users/rishikothari/Documents/BlackChalk/videos/index/1440p60/partial_movie_files/Intro/00003.mp4'
 file '/Users/rishikothari/Documents/BlackChalk/videos/index/1440p60/partial_movie_files/Intro/00004.mp4'
-file '/Users/rishikothari/Documents/BlackChalk/videos/index/1440p60/partial_movie_files/Intro/00005.mp4'
-file '/Users/rishikothari/Documents/BlackChalk/videos/index/1440p60/partial_movie_files/Intro/00006.mp4'
