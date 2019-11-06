@@ -10,6 +10,8 @@ class Intro(Scene):
         intro_text = TextMobject("An odd sum.")
 
         self.play(Write(pragmathic))
+        self.wait()
+        self.play(pragmathic.set_color_by_gradient, (GREEN, BLUE))
         self.wait(1)
         self.play(Transform(pragmathic, intro_text))
         self.wait(1.75)
@@ -128,14 +130,23 @@ class HowWillProve(Scene):
 
         # You're a mathematician, so we'll use your powers of deduction to figure this one out.
         self.wait()
+        you = TextMobject("You = Mathematician")
+        self.play(Write(you))
+        self.wait(5)
+        self.play(FadeOut(you))
 
-        # First off, we need to figure out what we're actually doing, so we'll lay out a proposition, which is exactly what you think: a proposition of a fact, that is either true or false
+
+        # First off, we need to figure out what we're actually doing, so we'll lay out a proposition, 
+        propositionintro = TextMobject("Proposition")
+        self.play(Write(propositionintro))
+        self.play(Transform(propositionintro, TextMobject("Proposition?")))
+        # which is exactly what you think: a proposition of a fact, that is either true or false
         self.wait()
         proposition = TexMobject(r"\textit{Proposition 1: }", r"\displaystyle\sum_{n=0}^{\infty}n = -\frac{1}{12}")
-        self.play(Write(proposition))
+        self.play(Transform(propositionintro,proposition))
         # In this case, our proposition is that the sum of all natural numbers is equal, or converges to, negative 1/12th.
         self.wait()
-        self.play(FadeOut(proposition))
+        self.play(FadeOut(propositionintro))
         # Let's go about thinking about this. What if there was a way to think differently about this, not as a sum in itself, but as a proportion of two other sums?
         r_sum_expr = "$\\displaystyle\\sum_{n=0}^{\\infty}n$"
         sum_composition = TextMobject(
@@ -144,7 +155,7 @@ class HowWillProve(Scene):
         self.wait()
         self.play(FadeOut(sum_composition))
 
-        # Two sums
+        # To help prove this, we'll enlist the help of two other sums, which are as follows:
         sum_one_textObject = TexMobject(
             r"\textbf{First sum}: ", r"\displaystyle\sum_{n=0}^{\infty}(-1)^n", " = ", r"1-1+1-1+1 \dots", r" = \frac{1}{2}").shift(UP)
         sum_two_textObject = TexMobject(
@@ -175,13 +186,13 @@ class Sum1(Scene):
         self.wait()
         self.play(FadeOutAndShiftDown(introduction))
 
-        # Introduction of Equation
         eq_sigma = TexMobject(r"\displaystyle\sum^{\infty}_{n=0} (-1)^n")
         eq_verbose = TexMobject(r"= 1-1+1-1+1 + \dots").shift(DOWN)
         eq_name = TexMobject(r"S_1").shift(UP*1.5)
         eq_name_equals = TexMobject(r"S_1 = ").shift(UP*1.5)
         grandi_series_text = TextMobject("Grandi", " Series").shift(
             UP*1.5).set_color_by_tex_to_color_map({"Grandi": BLUE})
+
 
         self.play(Write(eq_sigma))
         self.play(eq_sigma.shift, UP)
@@ -254,7 +265,7 @@ class Sum2(Scene):
         self.wait(2)
         self.play(FadeOut(section))
 
-        # Math is all about unknowns. Right now, we have no clue 
+        # 
 
 class IntroBanner(Scene):
     def construct(self):
@@ -269,21 +280,21 @@ class IntroBanner(Scene):
 
 class Part1(Scene):
     def construct(self):
-        part = TextMobject("Part $1$: Value")
+        part = TextMobject("Part 1: Value")
         self.play(Write(part))
         self.wait(1)
         self.play(FadeOut(part))
 
 class Part2(Scene):
     def construct(self):
-        part = TextMobject("Part $2$: Implications")
+        part = TextMobject("Part 2: Implications")
         self.play(Write(part))
         self.wait(1)
         self.play(FadeOut(part))
 
 class Part3(Scene):
     def construct(self):
-        part = TextMobject("Part $3$: Outro")
+        part = TextMobject("Part 3: Outro")
         self.play(Write(part))
         self.wait(1)
         self.play(FadeOut(part))
@@ -292,3 +303,7 @@ class Logo(Scene):
     def construct(self):
         logo = TextMobject("P").scale(3)
         self.add(logo.set_color(BLUE))
+
+class wait(Scene):
+    def construct(self):
+        self.wait(1)
