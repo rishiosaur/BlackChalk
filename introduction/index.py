@@ -263,9 +263,51 @@ class Sum2(Scene):
         section = TextMobject("Section 1.3: The Second Sum")
         self.play(Write(section))
         self.wait(2)
-        self.play(FadeOut(section))
+        self.play(FadeOutAndShiftDown(section))
 
-        # 
+        # The second sum that we'll be dealing with is this one:
+        eq_with_variable = TexMobject(r"S_2 = 1-2+3-4 + ...")
+        eq_equality = TexMobject(r"\frac{1}{4} = 1-2+3-4 + ...")
+        eq_first = TexMobject(r"S_1 = 1-1+1-1+...").shift(UP)
+        self.play(Write(eq_with_variable))
+        self.wait()
+
+        # And we'll be proving that this is equivalent to 1/4.
+        self.play(Transform(eq_with_variable, eq_equality))
+        self.wait()
+
+        # You might be wondering why I chose this sum to go after the first one, and I'd like to show why by bringing up the first one for you.
+        self.play(Transform(eq_with_variable, TexMobject(r"S_2 = 1-2+3-4 + ...")))
+        self.play(eq_with_variable.shift, DOWN)
+        self.play(Write(eq_first))
+
+        # As you can see, the operators between them are the same!
+        self.wait()
+        # This means that there is some sort of relationship between them!
+        self.play(FadeOut(eq_first), FadeOut(eq_with_variable))
+        self.wait()
+        # Let's try subtracting one from the other. How about the second sum minus the first sum?
+        subtract = TexMobject(r"S_2 - S_1 = (1-2+3-4)-(1-1+1-1)")
+        self.play(Write(subtract))
+        self.wait()
+        #Simplifying the right-hand side expression, we get:
+        self.play(Transform(subtract, TexMobject(r"S_2 - S_1 = (1-2+3-4)-1+1-1+1")))
+        self.wait()
+        # Simplifying one more, we get:
+        self.play(Transform(subtract, TexMobject(r"S_2 - S_1 = -1+2-3+...")))
+        # Now, we see something interesting! Let me just bring up the second sum once again.
+        self.play(subtract.shift, UP)
+        self.play(Write(eq_with_variable))
+        # As you can see, the difference between the first and the second sum is just the inverse of the second sum!
+        self.wait()
+        self.play(FadeOut(eq_with_variable), Transform(subtract, TexMobject(r"S_2 - S_1 = -S_2")))
+        # From here, we know that the first sum is equivalent to 1/2, and so we'll substitute that into this equation.
+        self.play(Transform(subtract, TexMobject(r"S_2 - \frac{1}{2} = -S_2")))
+        # Now we can solve for the second sum!
+        self.play(Transform(subtract, TexMobject(r"2S_2 - \frac{1}{2} = 0")))
+        self.play(Transform(subtract, TexMobject(r"2S_2 = \frac{1}{2}")))
+        self.play(Transform(subtract, TexMobject(r"S_2 = \frac{1}{4}")))
+        
 
 class IntroBanner(Scene):
     def construct(self):
@@ -307,3 +349,36 @@ class Logo(Scene):
 class wait(Scene):
     def construct(self):
         self.wait(1)
+
+
+class PlotFunctions(GraphScene):
+    CONFIG = {
+        "x_min": -10,
+        "x_max": 10,
+        "y_min": -1.5,
+        "y_max": 1.5,
+        "graph_origin": ORIGIN,
+        "function_color": RED,
+        "axes_color": GREEN,
+        "x_labeled_nums": range(-10, 12, 2),
+
+    }
+    def construct(self):
+        self.setup_axes(animate = True)
+        func_graph = self.get_graph(self.func_to_graph, self.function_color)
+        func_graph2 = self.get_graph(self.func_to_graph2, PURPLE)
+        vert_line = self.get_vertical_line_to_graph(TAU, func_graph, color = YELLOW)
+        graph_lab = self.get_graph_label(func_graph, label = "\\cos(x)")
+        graph_lab2 = self.get_graph_label(func_graph2, label = "\\sin(x)", x_val = -10, direction = UP / 2)
+        two_pi = TexMobject("x = 2 \\pi")
+        label_coord = self.input_to_graph_point(TAU, func_graph)
+        two_pi.next_to(label_coord, RIGHT + UP)
+
+        self.play(ShowCreation(func_graph), ShowCreation(func_graph2))
+        self.play(ShowCreation(vert_line), ShowCreation(graph_lab), ShowCreation(graph_lab2), ShowCreation(two_pi))
+
+    def func_to_graph(self, x):
+        return math.sqrt(1-x**2)
+
+    def func_to_graph2(self, x):
+        return np.sin(x)
