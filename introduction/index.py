@@ -318,8 +318,30 @@ class Sum3(Scene):
 
         # Just like the other sections, here's the sum.
         eq_with_variable = TexMobject(r"S_3 = \displaystyle\sum_{n=0}^{\infty}n = 1+2+3+4+...")
+        eq = TexMobject(r"S_3 = 1+2+3+4+...").shift(DOWN)
+        second_eq = TexMobject(r"S_2 = 1-2+3-4+...").shift(DOWN)
         self.play(Write(eq_with_variable))
-        
+
+        # And just like the other sums, we'll try to find out some relationships between the others, so let me bring up the last sum.
+        self.play(Transform(eq_with_variable, TexMobject(r"S_3 = 1+2+3+4+...")))
+        self.play(eq_with_variable.shift, UP)
+        self.play(Write(second_eq))
+
+        # Here, we see the relationship: the numbers in this example are the exact same, but the operators are different! Let's try subtracting the last sum and this one, to find some deeper patterns.
+        self.play(FadeOutAndShiftDown(second_eq))
+        self.play(Transform(eq_with_variable, TexMobject(r"S_2 - S_3 = (1-2+3-4+...)-(1+2+3+4+...)")))
+
+        # Simplifying, we see:
+        self.wait()
+        self.play(Transform(eq_with_variable, TexMobject(r"S_2 - S_3 = 1-2+3-4-1-2-3-4-...")))
+        self.wait()
+        self.play(Transform(eq_with_variable, TexMobject(r"S_2 - S_3 = -4-6-8-...")))
+
+        # Now, a very interesting pattern is revealed. Let me pull up the current sum underneath.
+        self.play(Write(eq))
+        # From here, we can analyze the relationship between them. Can you see anything interesting?
+        self.wait()
+        self.play()
 
 class IntroBanner(Scene):
     def construct(self):
