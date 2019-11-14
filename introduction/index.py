@@ -338,10 +338,35 @@ class Sum3(Scene):
         self.play(Transform(eq_with_variable, TexMobject(r"S_2 - S_3 = -4-6-8-...")))
 
         # Now, a very interesting pattern is revealed. Let me pull up the current sum underneath.
+        self.play(eq_with_variable.shift, UP)
         self.play(Write(eq))
         # From here, we can analyze the relationship between them. Can you see anything interesting?
         self.wait()
-        self.play()
+
+        # Well, I hope you've noticed that -4-6-8 and so on is just equal to 1+2+3+4 and so on times Negative 4! so we can just write that down.
+        self.play(FadeOutAndShiftDown(eq))
+        self.play(Transform(eq_with_variable, TexMobject(r"S_2 - S_3 = -4-6-8-... = -4S_3")))
+
+        # I'll leave the equations up for a little bit more so that you can get accustomed to it.
+        self.wait()
+        
+
+        # Removing some of the useless stuff from this relationship, we can see something pretty cool:
+        
+        self.play(Transform(eq_with_variable, TexMobject(r"S_2 - S_3 = -4S_3")))
+
+        # Now, we can do some simple algebra to figure out the true value of the third sum, starting with substituting 1/4 into the second sum's variable.
+        self.play(Transform(eq_with_variable, TexMobject(r"\frac{1}{4}-S_3 = -4S_3")))
+
+        # And here, we can solve for the third sum.
+        self.wait()
+        self.play(Transform(eq_with_variable, TexMobject(r"\frac{1}{4} = -3S_3")))
+        self.play(Transform(eq_with_variable, TexMobject(r"\frac{1}{12} = -S_3")))
+        self.play(Transform(eq_with_variable, TexMobject(r"-\frac{1}{12} = S_3")))
+
+        # Thus, we've proven that the sum of all natural numbers is negative one twelfth!
+        self.wait()
+        self.play(Transform(eq_with_variable, TexMobject(r"\displaystyle\sum_{n=0}^{\infty}n = 1+2+3+4+5 = -\frac{1}{12}")))
 
 class IntroBanner(Scene):
     def construct(self):
