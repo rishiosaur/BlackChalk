@@ -1,6 +1,5 @@
 from manimlib.imports import *
 
-
 class Intro(Scene):
     def construct(self):
         pragmathic = TextMobject("Pragmathic")
@@ -134,25 +133,39 @@ class HowWillProve(Scene):
         self.play(Write(you))
         self.wait(5)
         self.play(FadeOut(you))
+        self.wait(2)
 
 
         # First off, we need to figure out what we're actually doing, so we'll lay out a proposition, 
         propositionintro = TextMobject("Proposition")
         self.play(Write(propositionintro))
+        self.wait(3)
         self.play(Transform(propositionintro, TextMobject("Proposition?")))
         # which is exactly what you think: a proposition of a fact, that is either true or false
-        self.wait()
+        self.wait(2)
+        self.play(Transform(propositionintro, TexMobject(r"\text{Proposition} = \text{True} | \text{False} \Rightarrow \text{Proof} ")))
+        self.wait(6.5)
         proposition = TexMobject(r"\textit{Proposition 1: }", r"\displaystyle\sum_{n=0}^{\infty}n = -\frac{1}{12}")
         self.play(Transform(propositionintro,proposition))
         # In this case, our proposition is that the sum of all natural numbers is equal, or converges to, negative 1/12th.
-        self.wait()
+        self.wait(9)
         self.play(FadeOut(propositionintro))
         # Let's go about thinking about this. What if there was a way to think differently about this, not as a sum in itself, but as a proportion of two other sums?
+        think = TexMobject(r"\text{Proposition} \ne \text{Hard}")
+        self.wait(2)
+        self.play(Write(think))
+        self.wait(4)
+        self.play(FadeOut(think))
+        self.wait(4)
+        cr_thinking = TexMobject(r"\text{Proof} = \text{Creative Thinking}")
+        self.play(Write(cr_thinking))
+        self.wait(5.5)
+        self.play(FadeOut(cr_thinking))
         r_sum_expr = "$\\displaystyle\\sum_{n=0}^{\\infty}n$"
         sum_composition = TextMobject(
             r_sum_expr + "   is a combination of other sums!")
         self.play(Write(sum_composition))
-        self.wait()
+        self.wait(15)
         self.play(FadeOut(sum_composition))
 
         # To help prove this, we'll enlist the help of two other sums, which are as follows:
@@ -187,8 +200,9 @@ class Sum1(Scene):
         self.play(FadeOutAndShiftDown(introduction))
 
         eq_sigma = TexMobject(r"\displaystyle\sum^{\infty}_{n=0} (-1)^n")
+        half = TexMobject(r"\frac{1}{2}").shift(UP*2)
         eq_verbose = TexMobject(r"= 1-1+1-1+1 + \dots").shift(DOWN)
-        eq_name = TexMobject(r"S_1").shift(UP*1.5)
+        eq_name = TexMobject(r"S_1")
         eq_name_equals = TexMobject(r"S_1 = ").shift(UP*1.5)
         grandi_series_text = TextMobject("Grandi", " Series").shift(
             UP*1.5).set_color_by_tex_to_color_map({"Grandi": BLUE})
@@ -213,11 +227,11 @@ class Sum1(Scene):
         # We're going to be modifying this, so we'll name it S_1.
         self.play(eq_verbose.shift, DOWN)
         self.play(eq_sigma.shift, DOWN)
-        self.play(ReplacementTransform(eq_sigma.copy(), eq_name), Transform(
+        self.play(ReplacementTransform(eq_sigma.copy(), half), Transform(
             eq_sigma, TexMobject(r"= \displaystyle\sum^{\infty}_{n=0} (-1)^n")))
         self.wait(2)
-        self.play(FadeOut(eq_sigma), FadeOut(eq_verbose))
-        self.play(eq_name.shift, DOWN*2)
+        self.play(FadeOut(eq_verbose), FadeOut(half))
+        self.play(ReplacementTransform(eq_sigma, eq_name))
         self.wait(2)
         # Let's call it S-sub-1, as it is the first sum.
         self.play(Transform(eq_name, TexMobject(
@@ -368,6 +382,33 @@ class Sum3(Scene):
         self.wait()
         self.play(Transform(eq_with_variable, TexMobject(r"\displaystyle\sum_{n=0}^{\infty}n = 1+2+3+4+5 = -\frac{1}{12}")))
 
+class Afterthoughts(Scene):
+    def construct(self):
+        section = TextMobject("Section 2.1: What now?")
+        self.play(Write(section))
+        self.wait(2)
+        self.play(FadeOutAndShiftDown(section))
+
+        # Congratulations, you've proven a pretty interesting part of maths, and are now a formal mathematician! But having done this, what do we do now?
+        mathematician = TextMobject("You = Mathematician")
+        self.play(Write(mathematician))
+        self.wait()
+        self.play(Transform(mathematician, TextMobject("You = ","Formal"," Mathematician").set_color_by_tex_to_color_map({"Formal":PURPLE})))
+        self.wait()
+
+        self.play(FadeOut(mathematician))
+
+        # Well, let's look over what we did for each of the sums.
+        first_eq = TexMobject("S_1", " = ", r"\displaystyle\sum_{n=0}^{\infty}(-1)^n", " = ", r"1-1+1-1+1 \dots")
+        second_eq = TexMobject("S_2", " = ", r"\displaystyle\sum_{n=0}^{\infty}n(-1)^n", " = ", r"1-2+3-4+5 \dots")
+        third_eq = TexMobject("S_3", " = ", r"\displaystyle\sum_{n=0}^{\infty}n", " = ", r"1+2+3+4+5 \dots")
+        self.play(Write(first_eq))
+        self.play(first_eq.shift, UP*1.5)
+        self.play(Write(second_eq))
+        self.play()
+        
+
+
 class IntroBanner(Scene):
     def construct(self):
         pragmathic = TextMobject("Pragmathic")
@@ -388,7 +429,7 @@ class Part1(Scene):
 
 class Part2(Scene):
     def construct(self):
-        part = TextMobject("Part 2: Implications")
+        part = TextMobject("Part 2: Afterthoughts")
         self.play(Write(part))
         self.wait(1)
         self.play(FadeOut(part))
@@ -408,3 +449,93 @@ class Logo(Scene):
 class wait(Scene):
     def construct(self):
         self.wait(1)
+
+class E(Scene):
+    def construct(self):
+        self.add(TexMobject(r"e^{\pi i} = -1"))
+
+class BinomIntro(Scene):
+    def construct(self):
+        pragmathic = TextMobject("Pragmathic")
+        pragmathic.scale(2)
+        pragmathic.set_color_by_gradient(BLUE, PURPLE)
+
+        intro_text = TextMobject("Geometrical Algebra.")
+
+        self.play(Write(pragmathic))
+        self.wait()
+        self.play(pragmathic.set_color_by_gradient, (GREEN, BLUE))
+        self.wait(1)
+        self.play(Transform(pragmathic, intro_text))
+        self.wait(1.75)
+        self.play(FadeOut(pragmathic))
+
+class Whiteboard(Scene):
+    def construct(self):
+        part = TextMobject("Part 1: Whiteboard Math \& Intro")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2(Scene):
+    def construct(self):
+        part = TextMobject("Part 2: Relationships.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S1(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.1: Ideas.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S1(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.1: Pascal's Triangle.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S2(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.2: Continue.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S3(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.3: N choose K.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S4(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.4: Putting it all together.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S4(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.4: Putting it all together.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class V2P2S5(Scene):
+    def construct(self):
+        part = TextMobject("Section 2.5: Final formula.")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
+
+class FinalFormula(Scene):
+    def construct(self):
+        part = TexMobject(r"(x+y)^{n}=\displaystyle\sum _{k=0}^{n}{n \choose k}x^{n-k}y^{k}")
+        self.play(Write(part))
+        self.wait(1)
+        self.play(FadeOut(part))
